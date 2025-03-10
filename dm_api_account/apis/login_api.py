@@ -16,4 +16,4 @@ class LoginApi:
         """
         response = requests.post(
             url=f'{self.host}/v1/account/login', json=json_data)
-        assert response.status_code == 200, 'Пользователь не был авторизован'
+        return response

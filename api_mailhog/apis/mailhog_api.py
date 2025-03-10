@@ -20,5 +20,4 @@ class MailHogApi:
 
         response = requests.get(url=f'{self.host}/api/v2/messages',
                                 params=params, verify=False)
-        assert response.status_code == 200, 'Письма не были получены'
         return response

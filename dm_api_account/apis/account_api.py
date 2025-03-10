@@ -18,7 +18,17 @@ class AccountApi:
         """
         response = requests.post(
             url=f'{self.host}/v1/account', json=json_data)
-        assert response.status_code == 201, 'Пользователь не был создан'
+        return response
+
+    def put_v1_account_email(self, json_data: dict):
+        """
+        Change registered user email
+
+        Args:
+            json_data (dict)
+        """
+        response = requests.put(
+            url=f'{self.host}/v1/account/email', json=json_data)
         return response
 
     def put_v1_account_token(self, token: str):
@@ -30,7 +40,7 @@ class AccountApi:
         """
         response = requests.put(
             url=f'{self.host}/v1/account/{token}')
-        assert response.status_code == 200, 'Пользователь не был активирован'
+        return response
 
     def get_token_by_login(self, login: str, response: Response):
         """

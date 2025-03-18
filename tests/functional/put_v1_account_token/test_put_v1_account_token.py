@@ -1,5 +1,8 @@
 from dm_api_account.apis.account_api import AccountApi
 from api_mailhog.apis.mailhog_api import MailHogApi
+from faker import Faker
+
+fake = Faker()
 
 
 def test_put_v1_account_token():
@@ -8,9 +11,9 @@ def test_put_v1_account_token():
     mailhog_api = MailHogApi(host='http://5.63.153.31:5025')
 
     # Регистрация пользователя
-    login: str = 'pavel36'
+    login: str = fake.name_nonbinary()
     password: str = '12345678'
-    email: str = f'{login}@mail.com'
+    email: str = f'{login.replace(" ", "")}@mail.com'
     json_data = {
         'login': login,
         'password': password,
@@ -25,6 +28,7 @@ def test_put_v1_account_token():
 
     # Получить активационный токен
     token = account_api.get_token_by_login(login=login, response=response)
+    assert token, f'Токен для пользователя: {login} не был получен'
 
     # Активация пользователя
     response = account_api.put_v1_account_token(token=token)

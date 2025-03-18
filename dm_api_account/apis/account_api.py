@@ -1,6 +1,7 @@
 import requests
 from requests import Response
 from json import loads
+from time import sleep
 
 
 class AccountApi:
@@ -18,6 +19,7 @@ class AccountApi:
         """
         response = requests.post(
             url=f'{self.host}/v1/account', json=json_data)
+        sleep(30)
         return response
 
     def put_v1_account_email(self, json_data: dict):
@@ -55,7 +57,4 @@ class AccountApi:
             user_login = user_data['Login']
 
             if user_login == login:
-                token = user_data['ConfirmationLinkUrl'].split('/').pop()
-                break
-        assert token, f'Токен для пользователя: {login} не был получен'
-        return token
+                return user_data['ConfirmationLinkUrl'].split('/').pop()
